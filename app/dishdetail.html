@@ -34,7 +34,7 @@
                    <div class="media-left media-middle">
                             <a href="#">
                             <img class="media-object img-thumbnail"
-                             ng-src={{DishDetailController.dish.image}} alt="Uthappizza">
+                             ng-src={{dish.image}} alt="Uthappizza">
                             </a>
                     </div>
                     <div class="media-body">
@@ -58,7 +58,7 @@
                 
             </div>
             <div class="col-xs-9 col-xs-offset-1" ng-controller="DishCommentController">
-                <blockquote ng-hide="commentForm.$invalid && !commentForm.$pristine">
+                <blockquote ng-show="commentForm.$valid && !commentForm.$pristine">
                   <p>{{commentObj.rating}} Stars</p>
                   <p>{{commentObj.comment}}</p>
                   <footer>{{commentObj.author}}</cite></footer>
@@ -90,7 +90,7 @@
                                 <input type="radio" name="stars" id="star4" ng-model="commentObj.rating" value="4">4
                               </label>
                               <label>
-                                <input type="radio" name="stars" id="star5" ng-model="commentObj.g" value="5">5
+                                <input type="radio" name="stars" id="star5" ng-model="commentObj.rating" value="5">5
                               </label>
                             </div>
                         </div>
