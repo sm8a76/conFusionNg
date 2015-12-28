@@ -8,11 +8,12 @@ module.exports = function (grunt) {
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin'
-  });    
+  });   
+ 
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-          pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('package.json'),
 
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -26,6 +27,37 @@ module.exports = function (grunt) {
           'app/scripts/{,*/}*.js'
         ]
       }
+    },
+    ngAnnotate: {
+        options: {
+            singleQuotes: true,
+        },
+        app1: {
+            files: {
+                'a.js': ['a.js'],
+                'c.js': ['b.js'],
+                'f.js': ['d.js', 'e.js'],
+            },
+        },
+        app2: {
+            files: [
+                {
+                    expand: true,
+                    src: ['f.js'],
+                    ext: '.annotated.js', // Dest filepaths will have this extension. 
+                    extDot: 'last',       // Extensions in filenames begin after the last dot 
+                },
+            ],
+        },
+        app3: {
+            files: [
+                {
+                    expand: true,
+                    src: ['g.js'],
+                    rename: function (dest, src) { return src + '-annotated'; },
+                },
+            ],
+        },
     },
     copy: {
       dist: {
@@ -60,7 +92,7 @@ module.exports = function (grunt) {
         }
     },
     useminPrepare: {
-        html: 'app/index.html',
+        html: './app/**/*.html',
         options: {
             dest: 'dist'
         }
@@ -155,6 +187,9 @@ module.exports = function (grunt) {
       }
     }      
   });
+
+  grunt.loadNpmTasks('grunt-ng-annotate'); 
+    
   grunt.registerTask('build', [
     'clean',
     'jshint',
