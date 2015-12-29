@@ -5,7 +5,15 @@ angular.module('confusionApp')
             $scope.tab = 1;
             $scope.filtText = '';
             $scope.showDetails = false;
-            $scope.dishes= menuFactory.getDishes();            
+            $scope.dishes = {};
+    
+            menuFactory.getDishes()
+            .then(
+                function(response) {
+                    $scope.dishes = response.data;
+                }
+            );            
+            
  
              $scope.select = function(setTab) {
                 $scope.tab = setTab;
@@ -25,6 +33,7 @@ angular.module('confusionApp')
             $scope.isSelected = function (checkTab) {
                 return ($scope.tab === checkTab);
             };
+            
             $scope.toggleDetails = function() {
                 $scope.showDetails = !$scope.showDetails;
             };            
@@ -73,8 +82,16 @@ angular.module('confusionApp')
             
         }])*/
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
-            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
-            $scope.dish = dish;
+            $scope.dish = {};
+            
+            menuFactory.getDish(parseInt($stateParams.id,10))
+            .then(
+                function(response){
+                    $scope.dish = response.data;
+                    $scope.showDish=true;
+                }
+            );            
+            
         }])
 
         .controller('DishCommentController', ['$scope', function($scope) {
@@ -108,8 +125,16 @@ angular.module('confusionApp')
         }])
         .controller('IndexController', 
                     ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
-            
-                $scope.dish = menuFactory.getDish(0);
+                $scope.dish = {};
+
+                menuFactory.getDish(0)
+                .then(
+                    function(response){
+                        $scope.dish = response.data;
+                        $scope.showDish = true;
+                    }
+                );                        
+                        
                 $scope.promotion = menuFactory.getPromotion(0);
                 $scope.chef = corporateFactory.getLeader(3);                       
                 //console.log($scope.promotion);
