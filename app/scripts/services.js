@@ -2,7 +2,7 @@
 
 angular.module('confusionApp')
         .constant("baseURL","http://localhost:3000/")
-        .factory('menuFactory', ['$http', 'baseURL', function($http,baseURL) {
+        .factory('menuFactory', ['$resource', 'baseURL', function($resource,baseURL) {
     
             var menufac = {};
     
@@ -19,13 +19,11 @@ angular.module('confusionApp')
 
                 ];    
     
+        
                 menufac.getDishes = function(){
-                                        return $http.get(baseURL+"dishes");
-                };
-                
-                menufac.getDish = function (index) {
-                                        return $http.get(baseURL+"dishes/"+index);
+                                        return $resource(baseURL+"dishes/:id",null,  {'update':{method:'PUT' }});
                 };            
+        
 
                 // implement a function named getPromotion
                 // that returns a selected promotion.
