@@ -1,0 +1,24 @@
+# Web tools
+npm install -g bower
+
+# Task runners
+npm install -g grunt-cli
+npm install -g gulp
+
+# Json server
+npm install -g json-server
+json-server --watch db.json
+
+# Unit testing
+npm install -g karma-cli
+karma start karma.conf.js
+
+# End to end testing
+npm install -g protractor
+webdriver-manager update
+protractor protractor.conf.js
+
+# Scaffolding
+npm install	yo -g
+npm install generator-angular -g
+yo angular
